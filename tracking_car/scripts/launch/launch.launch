@@ -1,0 +1,8 @@
+<launch>
+  <node
+    pkg="tracking_car"
+    type="view_gazebo_camera.py"
+    name="view_gazebo_camera"
+    output="screen"
+  />
+</launch>

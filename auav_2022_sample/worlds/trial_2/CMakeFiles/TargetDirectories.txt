@@ -1,0 +1,5 @@
+/home/scoops12/git/uavcc-simulator/trial_2_setup/CMakeFiles/rebuild_cache.dir
+/home/scoops12/git/uavcc-simulator/trial_2_setup/CMakeFiles/edit_cache.dir
+/home/scoops12/git/uavcc-simulator/trial_2_setup/CMakeFiles/independent_listener.dir
+/home/scoops12/git/uavcc-simulator/trial_2_setup/CMakeFiles/integrated_main.dir
+/home/scoops12/git/uavcc-simulator/trial_2_setup/CMakeFiles/animated_box_two.dir

@@ -5,7 +5,7 @@
   <arg name="verbose" default="true"/>
   <arg name="paused" default="false"/>
   <arg name="interactive" default="false"/>
-  <arg name="world" default="$(find auav_2022_sample)/worlds/test.world"/>
+  <arg name="world" default="$(find auav_2022_sample)/worlds/trial_1/trial_1.world"/>
   <param name="use_sim_time" value="true" />
 
   <!-- Launch rqt_reconfigure -->
@@ -29,7 +29,7 @@
 
     <!--spawn vehicle model in gazebo-->
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="log"
-      args="-sdf -file $(find auav_2022_sample)/models/sample_drone/sample_drone.sdf -model drone -x 0 -y 0 -z 0 -R 0 -P 0 -Y 0"/>
+      args="-sdf -file $(find auav_2022_sample)/models/sample_drone/sample_drone.sdf -model drone -x -9.5 -y 0 -z 0 -R 0 -P 0 -Y 0"/>
 
     <!--px4 software in the loop-->
     <env name="PX4_SIM_MODEL" value="iris" />
