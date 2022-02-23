@@ -24,7 +24,7 @@ import struct
 from sensor_msgs.msg import PointCloud2
 from sensor_msgs.msg import PointField
 
-class find_pos_rgb:
+class Find_pos_rgb:
 
     def init(self, data):
         self.rgb_array = data 
@@ -42,13 +42,13 @@ class find_pos_rgb:
             return 1
         return 0
     
-    def findred(self.rgb_array):
-        shape = rgb[0].shape
+    def findred():
+        shape = self.rgb_array[0].shape
         row = shape[0]
         col = shape[1]
-        red = rgb[0]
-        green = rgb[1]
-        blue = rgb[2]
+        red = self.rgb_array[0]
+        green = self.rgb_array[1]
+        blue = self.rgb_array[2]
         redDeter = np.zeros((row, col))
         for i in range(row):
             for j in range(col):
@@ -60,7 +60,8 @@ class find_pos_rgb:
         # print(redDeter)
         return redDeter
     
-    def findCenter(findred(self.rgb_array)):
+    def findCenter():
+        matrix = findred()
         row = len(matrix)
         col = len(matrix[0])
         arr = np.where(matrix == 1)
