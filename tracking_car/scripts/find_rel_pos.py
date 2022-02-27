@@ -26,7 +26,7 @@ from sensor_msgs.msg import PointField
 
 class Find_pos_goal:
 
-    def init(centerRed, drone_pose_x, drone_pose_y, drone_pose_z):
+    def __init__(self, centerRed, drone_pose_x, drone_pose_y, drone_pose_z):
         self.dist_from_pointcloud = 1
 
         self.eg_per_pix = 120/640   # deg/pixels
@@ -48,7 +48,7 @@ class Find_pos_goal:
         self.drone_pose_y = drone_pose_y
         self.drone_pose_z = drone_pose_z
 
-    def pos_goal():
+    def pos_goal(self):
         # self.x_manual += self.x_step
         # pose.pose.position.x = self.x_manual
         self.pose.pose.position.x = self.drone_pose_x + delta_x

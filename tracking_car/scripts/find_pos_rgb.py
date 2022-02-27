@@ -26,7 +26,7 @@ from sensor_msgs.msg import PointField
 
 class Find_pos_rgb:
 
-    def init(self, data):
+    def __init__(self, data):
         self.rgb_array = data 
 
     def checkR(pixelr):
@@ -42,26 +42,26 @@ class Find_pos_rgb:
             return 1
         return 0
     
-    def findred():
-        shape = self.rgb_array[0].shape
-        row = shape[0]
-        col = shape[1]
-        red = self.rgb_array[0]
-        green = self.rgb_array[1]
-        blue = self.rgb_array[2]
+    def findred(self):
+        shape_img = self.rgb_array.shape
+        row = shape_img[0]
+        col = shape_img[1]
+        red = self.rgb_array[:,:,0]
+        green = self.rgb_array[:,:,1]
+        blue = self.rgb_array[:,:,2]
         redDeter = np.zeros((row, col))
         for i in range(row):
             for j in range(col):
-                r = checkR(red[i][j])
-                g = checkG(green[i][j])
-                b = checkB(blue[i][j])
+                r = Find_pos_rgb.checkR(red[i][j])
+                g = Find_pos_rgb.checkG(green[i][j])
+                b = Find_pos_rgb.checkB(blue[i][j])
                 if (r & g & b) == 1:
                     redDeter[i][j] = 1
         # print(redDeter)
         return redDeter
     
-    def findCenter():
-        matrix = findred()
+    def findCenter(self):
+        matrix = self.findred()
         row = len(matrix)
         col = len(matrix[0])
         arr = np.where(matrix == 1)
