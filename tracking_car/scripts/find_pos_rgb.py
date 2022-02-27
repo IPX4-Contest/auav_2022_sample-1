@@ -65,7 +65,7 @@ class Find_pos_rgb:
         row = len(matrix)
         col = len(matrix[0])
         arr = np.where(matrix == 1)
-        print(arr)
+        # print(arr)
         mean_row = S.mean(arr[0])
         mean_col = S.mean(arr[1])
         center = [mean_row, mean_col]

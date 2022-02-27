@@ -29,15 +29,16 @@ class Find_pos_goal:
     def __init__(self, centerRed, drone_pose_x, drone_pose_y, drone_pose_z, depth_array):
         self.dist_from_pointcloud = 1
 
-        self.deg_per_pix = 120/640   # deg/pixels
-        self.hor_pix_from_center = centerRed[0] - 320
-        self.hor_degree = self.deg_per_pix*self.hor_pix_from_center
-        self.hor_rad = self.hor_degree*(3.14159/180.0)
+        # self.deg_per_pix = 120/640   # deg/pixels
+        # self.hor_pix_from_center = centerRed[0] - 320
+        # self.hor_degree = self.deg_per_pix*self.hor_pix_from_center
+        # self.hor_rad = self.hor_degree*(3.14159/180.0)
 
-        self.delta_x = np.cos(self.hor_rad)*self.dist_from_pointcloud
-        self.delta_y = -np.sin(self.hor_rad)*self.dist_from_pointcloud
+        # self.delta_x = np.cos(self.hor_rad)*self.dist_from_pointcloud
+        # self.delta_y = -np.sin(self.hor_rad)*self.dist_from_pointcloud
 
         self.depth_array = depth_array
+        self.centerRed = centerRed
 
         #goal_rel_pose message initialization
         self.pose = PoseStamped()
@@ -52,9 +53,18 @@ class Find_pos_goal:
     def pos_goal(self):
         # self.x_manual += self.x_step
         # pose.pose.position.x = self.x_manual
-        self.pose.pose.position.x = self.drone_pose_x + self.delta_x
-        self.pose.pose.position.y = self.drone_pose_y + self.delta_y
-        self.pose.pose.position.z = 0.0
+        target_row = self.centerRed[0]
+        target_col = self.centerRed[1]
+        target_pixel_depth_data = self.depth_array[target_row, target_col, :]
+        print(f"center: {self.centerRed}")
+        print(f"depth shit: {target_pixel_depth_data}")
+        print(f"x values: {self.depth_array[:,:,0]}")
+        print(f"y values: {self.depth_array[:,:,1]}")
+        print(f"z values: {self.depth_array[:,:,2]}")
+
+        self.pose.pose.position.x = - target_pixel_depth_data[1]
+        self.pose.pose.position.y = - target_pixel_depth_data[0]
+        self.pose.pose.position.z = - target_pixel_depth_data[2]
 
         self.pose.pose.orientation.x = 0.0
         self.pose.pose.orientation.y = 0.0

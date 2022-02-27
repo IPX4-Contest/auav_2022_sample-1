@@ -31,8 +31,6 @@ from find_rel_pos import Find_pos_goal
 class view_gazebo_camera:
 
   def __init__(self):
-    self.x_manual = -5.0
-    self.x_step = 1.0
 
     self.rgb_array = np.empty
     self.depth_array = np.empty
@@ -83,21 +81,26 @@ class view_gazebo_camera:
 
   #publish the goal position to the topic
   def depth_callback(self, data):
-      print('working')
       points_list = []
 
-      for data in pc2.read_points(data, skip_nans=True):
-        points_list.append([data[0], data[1], data[2], data[3]])
+      # x: 0, y: 1, z: 2
+      for elem in pc2.read_points(data, skip_nans=True):
+        points_list.append(list(elem))
+      # print(f"point_list type: {type(points_list)}")
 
-      self.depth_array = np.array(points_list)
-      print(self.depth_array.shape)
+      points_list = np.asarray(points_list)
 
-      find_goal = Find_pos_goal(self.centerRed, self.drone_pose_x, self.drone_pose_y, self.drone_pose_z, self.depth_array)
+      points_list_mod = points_list.reshape(480, 640, 4)
+      # print(f"points_list_mod.shape {points_list_mod.shape}")
+      # print(f"sample data: {points_list_mod[1,1,:]}")
+
+
+
+
+      find_goal = Find_pos_goal(self.centerRed, self.drone_pose_x, self.drone_pose_y, self.drone_pose_z, points_list_mod)
       pose = find_goal.pos_goal()
 
       self.pub.publish(pose)
-
-
 
 
       '''
