@@ -56,21 +56,25 @@ class Find_pos_goal:
         target_row = self.centerRed[0]
         target_col = self.centerRed[1]
         target_pixel_depth_data = self.depth_array[target_row, target_col, :]
-        print(f"center: {self.centerRed}")
-        print(f"depth shit: {target_pixel_depth_data}")
-        print(f"x values: {self.depth_array[:,:,0]}")
-        print(f"y values: {self.depth_array[:,:,1]}")
-        print(f"z values: {self.depth_array[:,:,2]}")
+        # print(f"center: {self.centerRed}")
+        # print(f"depth shit: {target_pixel_depth_data}")
+        # print(f"x values: {self.depth_array[:,:,0]}")
+        # print(f"y values: {self.depth_array[:,:,1]}")
+        # print(f"z values: {self.depth_array[:,:,2]}")
 
         self.pose.pose.position.x = - target_pixel_depth_data[1]
         self.pose.pose.position.y = - target_pixel_depth_data[0]
         self.pose.pose.position.z = - target_pixel_depth_data[2]
 
+        # print(f"self.drone_pose_x {self.drone_pose_x}")
+        # print(f"self.drone_pose_y {self.drone_pose_y}")
+        # print(f"self.drone_pose_z {self.drone_pose_z}")
+
         self.pose.pose.orientation.x = 0.0
         self.pose.pose.orientation.y = 0.0
         self.pose.pose.orientation.z = 0.0
         self.pose.pose.orientation.w = 0.0
-        self.rate = rospy.Rate(1) # 0.2hz
+        self.rate = rospy.Rate(10) # 0.2hz
         self.rate.sleep()
 
         # print("drone_x: %.2f\ndrone_y: %.2f\ndrone_z: %.2f\n" % (self.drone_pose_x, self.drone_pose_y, self.drone_pose_z))
