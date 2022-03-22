@@ -49,10 +49,12 @@ class view_gazebo_camera:
     self.drone_pose = rospy.Subscriber("/drone/mavros/local_position/pose", PoseStamped, self.pose_callback)
     # self.image_depth_sub = rospy.Subscriber("/drone/camera/depth/image_raw", Image, self.depth_callback)
     self.image_depth_sub = rospy.Subscriber("/drone/camera/depth/points", PointCloud2, self.depth_callback, queue_size=1, buff_size=52428800)
-    self.pub = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=10)
-    self.img_pub = rospy.Publisher('/move_base_simple/cv_image', Image, queue_size=10)
+    self.pub = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=1000)
+    self.img_pub = rospy.Publisher('/move_base_simple/cv_image', Image, queue_size=100000)
 
   def draw_crosshair(self):
+    if self.centerRed is None:
+      return
     my_array = self.rgb_array
     centerx = self.centerRed[0]
     centery = self.centerRed[1]
@@ -120,13 +122,6 @@ class view_gazebo_camera:
 
       points_list = xyz_array
 
-      ## x: 0, y: 1, z: 2
-      #for elem in pc2.read_points(data, skip_nans=True):
-      #  points_list.append(list(elem))
-      ## print(f"point_list type: {type(points_list)}")
-
-      # points_list = np.asarray(points_list)
-
       points_list_mod = points_list.reshape(480, 640, 3)
       # print(f"points_list_mod.shape {points_list_mod.shape}")
       # print(f"sample data: {points_list_mod[1,1,:]}")
@@ -136,6 +131,9 @@ class view_gazebo_camera:
 
       find_goal = Find_pos_goal(self.centerRed, self.drone_pose_x, self.drone_pose_y, self.drone_pose_z, points_list_mod)
       pose = find_goal.pos_goal()
+
+      if pose is None:
+        return
 
       self.draw_crosshair()
       self.pub.publish(pose)

@@ -30,11 +30,11 @@ class Find_pos_rgb:
         self.rgb_array = data 
 
     def checkR(pixelr):
-        if pixelr <= 100:
+        if pixelr <= 35:
             return 1
         return 0
     def checkG(pixelg):
-        if pixelg <= 100:
+        if pixelg <= 35:
             return 1
         return 0
     def checkB(pixelb):
@@ -66,7 +66,10 @@ class Find_pos_rgb:
         col = len(matrix[0])
         arr = np.where(matrix == 1)
         # print(arr)
-        mean_row = S.mean(arr[0])
-        mean_col = S.mean(arr[1])
-        center = [mean_row, mean_col]
+        try:
+            mean_row = S.mean(arr[0])
+            mean_col = S.mean(arr[1])
+            center = [mean_row, mean_col]
+        except:
+            center = None
         return center

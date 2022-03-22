@@ -53,6 +53,9 @@ class Find_pos_goal:
     def pos_goal(self):
         # self.x_manual += self.x_step
         # pose.pose.position.x = self.x_manual
+        if self.centerRed is None:
+            return None
+        
         target_row = self.centerRed[0]
         target_col = self.centerRed[1]
         target_pixel_depth_data = self.depth_array[target_row, target_col, :]
@@ -62,9 +65,9 @@ class Find_pos_goal:
         # print(f"y values: {self.depth_array[:,:,1]}")
         # print(f"z values: {self.depth_array[:,:,2]}")
 
-        self.pose.pose.position.x = - target_pixel_depth_data[1]
-        self.pose.pose.position.y = - target_pixel_depth_data[0]
-        self.pose.pose.position.z = - target_pixel_depth_data[2]
+        self.pose.pose.position.x = self.drone_pose_x + target_pixel_depth_data[2]
+        self.pose.pose.position.y = self.drone_pose_y - target_pixel_depth_data[0]
+        self.pose.pose.position.z = self.drone_pose_z + target_pixel_depth_data[1]
 
         # print(f"self.drone_pose_x {self.drone_pose_x}")
         # print(f"self.drone_pose_y {self.drone_pose_y}")
